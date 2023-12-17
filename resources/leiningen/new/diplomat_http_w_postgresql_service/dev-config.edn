@@ -1,0 +1,11 @@
+{
+ {{namespace}}.ports.sql.core/db-type    "postgresql"
+ {{namespace}}.ports.sql.core/host       "0.0.0.0"
+ {{namespace}}.ports.sql.core/port       "5432"
+ {{namespace}}.ports.sql.core/db-name    "{{namespace}}"
+ {{namespace}}.ports.sql.core/username   "admin"
+ {{namespace}}.ports.sql.core/password   "admin"
+ {{namespace}}.configs/env               "dev"
+ {{namespace}}.configs/user-passphrase   "dobry den"
+ {{namespace}}.configs/admin-passphrase  "dobrou noc"
+ }

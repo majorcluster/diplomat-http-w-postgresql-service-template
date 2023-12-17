@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS event_polls_events;
+DROP TABLE IF EXISTS event_polls;
+DROP TABLE IF EXISTS events;
+DROP TYPE IF EXISTS cities;
