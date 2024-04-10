@@ -16,6 +16,7 @@ lein new org.clojars.majorcluster/diplomat-http-w-postgresql-service <your proje
 ## Development
 Testing locally:   
 lein new diplomat-http-w-postgresql-service <your project name>
+curl -H "x-token: dobrou noc" -X GET localhost:8080/events
 
 Deploying:   
 export GPG_TTY=$(tty) && lein deploy clojars

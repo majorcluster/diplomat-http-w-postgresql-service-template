@@ -1,4 +1,4 @@
-(defproject org.clojars.majorcluster/lein-template.diplomat-http-w-postgresql-service "0.0.1"
+(defproject org.clojars.majorcluster/lein-template.diplomat-http-w-postgresql-service "0.0.2"
   :description "Diplomat architecture-pedestal styled template with postgresql db for leiningen generation"
   :url "https://github.com/majorcluster/diplomat-http-w-postgresql-service-template"
   :license {:name "MIT License"

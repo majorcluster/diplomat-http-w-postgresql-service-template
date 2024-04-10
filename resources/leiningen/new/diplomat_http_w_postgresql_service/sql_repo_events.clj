@@ -2,11 +2,11 @@
     (:require [next.jdbc.sql :as jdbc]
      [{{namespace}}.adapters.events :as a.events]
      [{{namespace}}.ports.sql.core :as sql.c]
-     [{{namespace}}.ports.sql.repositories.entities :as repo.ent]))
+     [{{namespace}}.ports.sql.repositories.entities :as r.entities]))
 
 (defn find-all
       []
-      (-> (repo.ent/find-all "events")
+      (-> (r.entities/find-all "events")
           a.events/sql-wire->internal))
 
 (defn find-by-interval
@@ -18,20 +18,20 @@
 (defn find-by-id
       [id]
       (->> id
-           (repo.ent/find-by-id "events")
+           (r.entities/find-by-id "events")
            a.events/sql-wire->internal
            (#(if (empty? %) nil %))))
 
 (defn insert!
       [m]
-      (repo.ent/insert! :events (a.events/internal->sql-wire m)))
+      (r.entities/insert! :events (a.events/internal->sql-wire m)))
 
 (defn update!
       [m id]
-      (repo.ent/update! :events
+      (r.entities/update! :events
                         (a.events/internal->sql-wire m)
                         ["id = ?" id]))
 
 (defn delete-by-id!
       [id]
-      (repo.ent/delete-by-id! :events (parse-long id)))
+      (r.entities/delete-by-id! :events (parse-long id)))

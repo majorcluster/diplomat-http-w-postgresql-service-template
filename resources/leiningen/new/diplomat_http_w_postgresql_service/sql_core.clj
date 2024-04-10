@@ -1,29 +1,32 @@
 (ns {{namespace}}.ports.sql.core
     (:require [clojure.java.io :as io]
-     [next.jdbc :as jdbc]
      [{{namespace}}.configs :as configs]
+     [next.jdbc :as jdbc]
+     [next.jdbc.prepare :as jdbc.prepare]
+     [next.jdbc.result-set :as jdbc.result-set]
      [outpace.config :refer [defconfig]])
-    (:import (clojure.lang Var$Unbound)))
+    (:import (clojure.lang LazySeq PersistentVector Var$Unbound)
+     [java.sql
+      Array
+      Date
+      PreparedStatement
+      Time
+      Timestamp]))
 
-(defconfig db-type)
-(defconfig subname)
-(defconfig subprotocol)
-(defconfig host)
-(defconfig port)
-(defconfig db-name)
-(defconfig username)
-(defconfig password)
-
+(defconfig url "")
+(defconfig username "")
+(defconfig password "")
 (def raw-connection
-  {:dbtype db-type
-   :subname subname
-   :subprotocol subprotocol
-   :host host
-   :port port
-   :dbname db-name
-   :user username
-   :password password
-   :ssl false})
+  (if (.contains url "h2")
+    {:dbtype "h2:mem"
+     :dbname "firma-analysis"
+     :user username
+     :password password
+     :ssl false}
+    {:jdbcUrl url
+     :user username
+     :password password
+     :ssl false}))
 
 (def ^:private connection ;removes unbound values
   (into {} (filter (fn [[_ v]]
@@ -48,7 +51,7 @@
                        io/file
                        file-seq
                        (filter #(re-matches #"^[1-9]{1,}.sql$" (.getName %)))
-                       reverse)]
+                       (sort-by #(.getName %)))]
            (jdbc/with-transaction
             [tx datasource]
             (mapv #(exec-migration-file tx %) files))))
@@ -84,8 +87,33 @@
             [tx datasource]
             (exec-migration-file tx t-file))))
 
+(defn convert-sql-array [^Array v]
+      (let [x (first (.getArray v))
+            f (cond (instance? Date x) #(.toLocalDate %)
+                    (instance? Time x) #(.toLocalTime %)
+                    (instance? Timestamp x) #(.toLocalDateTime %)
+                    :else identity)]
+           (vec (map f (.getArray v)))))
+
+(defn override-protocols
+      []
+      (extend-protocol jdbc.prepare/SettableParameter
+                       PersistentVector
+                       (set-parameter [^PersistentVector v ^PreparedStatement ps ^long i]
+                                      (.setObject ps i (into-array v)))
+                       LazySeq
+                       (set-parameter [^LazySeq v ^PreparedStatement ps ^long i]
+                                      (.setObject ps i (into-array v))))
+      (extend-protocol jdbc.result-set/ReadableColumn
+                       Array
+                       (read-column-by-label [^Array v _]
+                                             (convert-sql-array v))
+                       (read-column-by-index [^Array v _2 _3]
+                                             (convert-sql-array v))))
+
 (defn start
       [migrate?]
+      (override-protocols)
       (cond migrate? (do
                        (when (configs/env-test?)
                              (teardown))

@@ -1,0 +1,8 @@
+{
+ {{namespace}}.ports.sql.core/url                          #config/env "SQL_URL"
+ {{namespace}}.ports.sql.core/username                     #config/env "SQL_USERNAME"
+ {{namespace}}.ports.sql.core/password                     #config/env "SQL_PWD"
+ {{namespace}}.configs/env                                 "prod"
+ {{namespace}}.configs/user-passphrase                     #config/env "USER_PP"
+ {{namespace}}.configs/admin-passphrase                    #config/env "ADMIN_PP"
+ }

@@ -1,6 +1,6 @@
 (ns {{namespace}}.ports.sql.repositories.entities
-    (:require [next.jdbc.sql :as jdbc]
-     [{{namespace}}.ports.sql.core :as sql.c]))
+    (:require [{{namespace}}.ports.sql.core :as sql.c]
+     [next.jdbc.sql :as jdbc]))
 
 (defn find-all
       [entity]

@@ -8,16 +8,17 @@ FIXME
 
 1. Start postgresql `docker run -itd -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5432:5432 -v ~/work/postgres:/var/lib/postgresql/data --name postgresql postgres`
 2. `$ docker exec -it postgresql bash`
-3. `$ postgresql --user=root --password=secret`
-4. <pre>psql -U admin</pre>"
-5. <pre>CREATE DATABASE {{namespace}};</pre>
-6. Start the application: `lein with-profile dev run`
-7. Start the application with migration: `lein with-profile dev run --migrate`
-8. Start dev server: `lein run-dev-w-migration` or `lein run-dev`
-9. Go to [localhost:8080](http://localhost:8080/{{namespace}}) to see a nice list in json!
-10. Read your app's source code at src/{{namespace}}/service.clj. Explore the docs of functions
+3. <pre>PGPASSWORD=admin psql -U admin</pre>"
+4. <pre>CREATE DATABASE {{namespace}};</pre>
+5. <pre>\c {{namespace}};</pre>
+6. <pre>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</pre>
+7. Start the application: `lein with-profile dev run`
+8. Start the application with migration: `lein with-profile dev run --migrate`
+9. Start dev server: `lein run-dev-w-migration` or `lein run-dev`
+10. Go to [localhost:8080](http://localhost:8080/{{namespace}}) to see a nice list in json!
+11. Read your app's source code at src/{{namespace}}/service.clj. Explore the docs of functions
     that define routes and responses.
-11. Run your app's tests with `lein test`.
+12. Run your app's tests with `lein test`.
 
 ## Migrations
 They are located at `resources/migrations`.   

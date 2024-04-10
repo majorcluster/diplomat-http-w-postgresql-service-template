@@ -27,8 +27,7 @@
                       "lint"                 ["do" ["diagnostics"]  ["format"] ["clean-ns"]]
                       "lint-fix"             ["do" ["format-fix"] ["clean-ns-fix"]]}
             :resource-paths ["config", "resources"]
-            :jvm-opts ["-Dresource.config.edn=app-config.edn"
-                       "-Duser.timezone=America/Sao_Paulo"]
+            :jvm-opts ["-Duser.timezone=America/Sao_Paulo"]
             :profiles {:dev {:plugins [[com.github.clojure-lsp/lein-clojure-lsp "1.3.17"]]
                              :aliases {"run-dev"              ["trampoline" "run" "-m" "{{namespace}}.server/run-dev"]
                                        "run-dev-w-migration"  ["trampoline" "run" "-m" "{{namespace}}.server/run-dev-w-migration"]}
@@ -38,5 +37,5 @@
                                              [com.h2database/h2 "2.2.224"]
                                              [nubank/matcher-combinators "3.8.8"]]
                               :jvm-opts ["-Dresource.config.edn=test-config.edn"]}
-                       :uberjar {:aot [{{namespace}}.server]}}
+                       :uberjar {:aot :all}}
             :main ^{:skip-aot true} {{namespace}}.server)

@@ -1,6 +1,4 @@
 {
- {{namespace}}.ports.sql.core/db-type      "h2:mem"
- {{namespace}}.ports.sql.core/db-name      "{{namespace}};MODE=PostgreSQL"
  {{namespace}}.configs/env                 "test"
  {{namespace}}.configs/user-passphrase     "dobry den"
  {{namespace}}.configs/admin-passphrase    "dobrou noc"

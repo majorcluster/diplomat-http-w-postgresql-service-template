@@ -18,6 +18,7 @@
                   ["resources/migrations/teardown.sql" (render "teardown.sql" data)]
                   ["resources/dev-config.edn" (render "dev-config.edn" data)]
                   ["resources/test-config.edn" (render "test-config.edn" data)]
+                  ["resources/prod-config.edn" (render "prod-config.edn" data)]
                   ["src/{{sanitized}}/adapters/commons.clj" (render "adapters_commons.clj" data)]
                   ["src/{{sanitized}}/adapters/event_polls.clj" (render "adapters_event_polls.clj" data)]
                   ["src/{{sanitized}}/adapters/events.clj" (render "adapters_events.clj" data)]

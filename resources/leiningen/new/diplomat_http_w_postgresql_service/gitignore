@@ -40,7 +40,5 @@ build/
 *.iml
 .idea
 
-prod-config.edn
-
 /.lsp/.cache
 /.clj-kondo/.cache
